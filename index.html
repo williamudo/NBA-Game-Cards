@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Basketball Card</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            
+            :root {
+                --base-px: 475px;
+                --player-ground: rgba(0, 0, 0, .7);
+                --card-width: 500px;
+                --card-mx: 1.5px;
+            }
+            * {
+                width: 100%;
+                height: 100%;
+                
+            }
+            
+            body {
+                background-image: url("outer-background.png");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                overflow: hidden;
+            }
+            
+
+            .jalen-card:hover {
+                transform: scale(1.05);
+            }
+
+            .jalen-card:active {
+                transform: translate(-150px, -20px);
+            }
+
+            .jalen-card {
+                position: absolute;
+                top: 20%;
+                left: 12%;
+                height: 750px;
+                width: 500px;
+                border-radius: 10%;
+                transition: all 0.5s ease-in-out;
+                cursor: pointer;
+                margin: 0;
+                padding: 0;
+                
+
+            }
+            
+            .player-card-stock {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100;
+                height: calc(var(--base-px) * 1);
+                background-color: var(--player-ground);
+                z-index: 0;
+                border-top-left-radius: 10%;
+                border-top-right-radius: 10%;
+                box-shadow: 0 2px 4px rgb(0, 0, 0);
+                
+            }
+            
+            
+            img {
+                width: calc(var(--base-px) * 1.5);
+                height: var(--base-px);
+                position: relative;
+                top: 0;
+                left: -90px;
+                margin: 0;
+                z-index: 1;
+                
+
+            }
+            
+            .player-rating {
+                background-color: black;
+                box-shadow: 0 2px 4px rgb(0, 0, 0);
+                border-radius: 50%;
+                position: relative;
+                top: -825px;
+                left: 425px;
+                width: 150px;
+                height: 150px;
+            }
+            .player-rating > h1 {
+                text-align: center;
+                font-size: 3.4rem;
+                color: #F73C3C;
+                text-shadow: 2px 2px 4px rgba(244, 70, 70, 0.5);
+                position: relative;
+                top: 25%; 
+                left: 0;
+
+            }  
+            
+            .title-card {
+                width: 100%;
+                height: 200px;
+                background-color: rgba(0, 0, 0, .7);
+                position: relative;
+                top: -490px;
+                z-index: 0;
+                border-bottom-right-radius: 10%;
+                border-bottom-left-radius: 10%;
+                box-shadow: 0 2px 4px rgb(0, 0, 0);
+                border-bottom: 2px solid #F73C3C;
+                border-left: 2px solid #F73C3C;
+                border-right: 2px solid #F73C3C;
+                
+            }
+
+            .title-card h1 {
+                color: #F73C3C;
+                text-shadow: 2px 2px 4px rgba(244, 70, 70, 0.5);
+                font-size: 3rem;
+                text-align: center;
+                position: relative;
+                top: 50px;
+                
+            }
+
+            .player-position {
+                width: 50px;
+                height: 50px;
+                background-color: var(--player-ground);
+                border-radius: 50%;
+                position: relative;
+                top: -583px;
+                left: 30%;
+                border: 5px solid red;
+                z-index: 1;
+
+            }
+            .player-position h1 {
+                color: white;
+                text-shadow: 2px 2px 4px rgba(244, 70, 70, 0.5);
+                font-size: 1.7rem;
+                text-align: center;
+                position: relative;
+                top: -8px;
+                left: 1px;
+            }
+
+            .player-team {
+                position: relative;
+                top: -665px;
+                left: 72%;
+                z-index: 1;
+            }
+            .player-team img {
+                --base-width: 78px;
+                width: var(--base-width);
+                height: calc(var(--base-width)* 1.018);
+            }
+
+            .card-info {
+                display: block;
+                width: 475px;
+                height: 500px;
+                background-color: rgba(0, 0, 0, .5);
+                border: 2px solid black;
+                border-radius: 10%;
+                position: absolute;
+                top: 25%;
+                left: 40%;
+                font-size: 1em;
+                box-shadow: 1px 2px 4px rgb(0, 0, 0);
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.5s ease, visibility 0.5s ease;
+                z-index: 1;   
+            }
+
+        
+            .card-info .stats {
+                text-decoration: underline;
+                color: #F73C3C;
+                text-shadow: 2px 2px 4px rgba(244, 70, 70, 0.5);
+                position: relative;
+                top: 3%;
+                left: 3%;
+            }
+
+            .card-info .team-name {
+                color: #F73C3C;
+                text-shadow: 2px 2px 4px rgba(244, 70, 70, 0.5);
+                position: relative;
+                top: -90%;
+                left: 3%;
+            }
+
+            .card-info .position-name {
+                color: #F73C3C;
+                text-shadow: 2px 2px 4px rgba(244, 70, 70, 0.5);
+                position: relative;
+                top: -182%;
+                left: 3%;
+            }
+
+            .card-info .archetype {
+                color: #F73C3C;
+                text-shadow: 2px 2px 4px rgba(244, 70, 70, 0.5);
+                position: relative;
+                top: -275%;
+                left: 3%;
+            }
+
+            .card-info .PPG {
+                color: #F73C3C;
+                text-shadow: 2px 2px 4px rgba(244, 70, 70, 0.5);
+                position: relative;
+                top: -360%;
+                left: 3%;
+            }
+
+            .card-info .RPG {
+                color: #F73C3C;
+                text-shadow: 2px 2px 4px rgba(244, 70, 70, 0.5);
+                position: relative;
+                top: -452%;
+                left: 3%;
+            }
+
+            .card-info .APG {
+                color: #F73C3C;
+                text-shadow: 2px 2px 4px rgba(244, 70, 70, 0.5);
+                position: relative;
+                top: -545%;
+                left: 3%;
+            }
+            
+            /* ----------------------------------------- */
+
+            .shai-card:hover {
+                transform: scale(1.05);
+            }
+
+            .shai-card:active {
+                transform: translate(150px, 20px);
+            }
+
+            .shai-card {
+                position: absolute;
+                top: 20%;
+                left: 52%;
+                height: 750px;
+                width: 500px;
+                border-radius: 10%;
+                transition: all 0.5s ease-in-out;
+                cursor: pointer;
+                margin: 0;
+                padding: 0;
+                z-index: 1;
+            
+            }
+
+            .shai-placement img {
+                width: calc(var(--base-px) * 1.52);
+                height: 450px;
+                position: relative;
+                top: 10px;
+                left: -90px;
+                margin: 0;
+                z-index: 1;
+            }
+                    
+            .shai-player-card {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100;
+                height: calc(var(--base-px) * .98);
+                background-color: var(--player-ground);
+                z-index: 0;
+                border-top-left-radius: 10%;
+                border-top-right-radius: 10%;
+                box-shadow: 0 2px 4px rgb(0, 0, 0);
+            }
+
+            .shai-rating {
+                background-color: black;
+                box-shadow: 0 2px 4px rgb(0, 0, 0);
+                border-radius: 50%;
+                position: relative;
+                top: -825px;
+                left: 425px;
+                width: 150px;
+                height: 150px;
+            }
+
+            .shai-rating h1 {
+                text-align: center;
+                font-size: 3.4rem;
+                color: #007AC1;
+                text-shadow: 2px 2px 4px rgba(47, 111, 229, 0.437);
+                position: relative;
+                top: 25%; 
+                left: 0;
+            } 
+
+            .shai-title-card {
+                width: 100%;
+                height: 200px;
+                background-color: rgba(0, 0, 0, .7);
+                position: relative;
+                top: -500.86px;
+                z-index: 2;
+                border-bottom-right-radius: 10%;
+                border-bottom-left-radius: 10%;
+                box-shadow: 0 2px 4px rgb(0, 0, 0);
+            }
+
+            .shai-title-card h1 {
+                color: #007AC1;
+                text-shadow: 2px 2px 4px rgba(47, 111, 229, 0.437);
+                font-size: 3rem;
+                text-align: center;
+                position: relative;
+                top: 10px;
+                
+            }
+
+            .shai-position {
+                width: 50px;
+                height: 50px;
+                background-color: var(--player-ground);
+                border-radius: 50%;
+                position: relative;
+                top: -578px;
+                left: 25%;
+                border: 5px solid #007AC1;
+                z-index: 2;
+
+            }
+            .shai-position h1 {
+                color: white;
+                text-shadow: 2px 2px 4px rgba(244, 70, 70, 0.5);
+                font-size: 1.7rem;
+                text-align: center;
+                position: relative;
+                top: -6px;
+                left: 1px;
+            }
+
+            .shai-team {
+                position: relative;
+                top: -665px;
+                left: 70%;
+                z-index: 2;
+            }
+            .shai-team img {
+                --base-width: 100px;
+                width: var(--base-width);
+                height: calc(var(--base-width)* 1.018);
+            }
+
+            .shai-info {
+                display: block;
+                width: 475px;
+                height: 500px;
+                background-color: rgba(0, 0, 0, .5);
+                border: 2px solid black;
+                border-radius: 10%;
+                position: absolute;
+                top: 30%;
+                left: 25%;
+                font-size: 1em;
+                box-shadow: 1px 2px 4px rgb(0, 0, 0);
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.5s ease, visibility 0.5s ease;
+                z-index: 2; 
+            }
+
+            
+
+            .shai-info .stats {
+                text-decoration: underline;
+                color: #007AC1;
+                text-shadow: 2px 2px 4px rgba(47, 111, 229, 0.437);
+                position: relative;
+                top: 3%;
+                left: 3%;
+            }
+
+            .shai-info .team-name {
+                color: #007AC1;
+                text-shadow: 2px 2px 4px rgba(47, 111, 229, 0.437);
+                position: relative;
+                top: -90%;
+                left: 3%;
+            }
+
+            .shai-info .position-name {
+                color: #007AC1;
+                text-shadow: 2px 2px 4px rgba(47, 111, 229, 0.437);
+                position: relative;
+                top: -176%;
+                left: 3%;
+            }
+
+            .shai-info .archetype {
+                color: #007AC1;
+                text-shadow: 2px 2px 4px rgba(47, 111, 229, 0.437);
+                position: relative;
+                top: -270%;
+                left: 3%;
+            }
+
+            .shai-info .PPG {
+                color: #007AC1;
+                text-shadow: 2px 2px 4px rgba(47, 111, 229, 0.437);
+                position: relative;
+                top: -357%;
+                left: 3%;
+            }
+
+            .shai-info .RPG {
+                color: #007AC1;
+                text-shadow: 2px 2px 4px rgba(47, 111, 229, 0.437);
+                position: relative;
+                top: -451%;
+                left: 3%;
+            }
+
+            .shai-info .APG {
+                color: #007AC1;
+                text-shadow: 2px 2px 4px rgba(47, 111, 229, 0.437);
+                position: relative;
+                top: -542%;
+                left: 3%;
+            }
+
+
+
+            /* Hide jalen-card when shai-card is hovered */
+            .shai-card:hover ~ .jalen-card {
+                opacity: 0;
+                visibility: hidden;
+                display: none;
+            }
+
+            /* Hide shai-card when jalen-card is hovered */
+            .jalen-card:hover ~ .shai-card {
+                opacity: 0;
+                visibility: hidden;
+                display: none;
+            }
+
+            /* Optional: Show info when card is hovered */
+            .shai-card:active ~ .shai-info,
+            .jalen-card:active ~ .card-info {
+                transition-delay: 0.5s;
+                opacity: 1;
+                visibility: visible;
+            }
+
+        </style>
+    </head>
+    <body>
+        
+        <div class="jalen-card">
+            <div class="player-placement">
+                <img src="jalen-no-background.png">
+            </div>
+            <div class="player-card-stock"></div>
+            <div class="player-rating">
+                <h1>89</h1>
+            </div>
+            <div class="title-card">
+                <h1>JALEN GREEN '24</h1>
+            </div>
+        
+            <div class="player-position">
+                <h1>SG</h1>
+            </div>
+            <div class="player-team">
+                <img src="houston-logo-no-background.png">
+            </div>
+            
+            
+        </div>
+        <div class="card-info" id="cardInfo">
+            <h1 class="stats">2024 - 2025 SEASON</h1>
+            <h1 class="team-name">TEAM: HOUSTON ROCKETS</h1>
+            <h1 class="position-name">POSITION: SG/PG</h1>
+            <h1 class="archetype">ARCHETYPE: INSIDE-OUT ISO SPECIALIST</h1>
+            <h1 class="PPG">PPG: 21.0 POINTS</h1>
+            <h1 class="RPG">RPG: 4.6 REBOUNDS</h1>
+            <h1 class="APG">APG: 3.4 ASSISTS</h1>
+        </div>
+
+        
+        
+        <script>
+            function toggleInfo() {
+                const info = document.getElementById('cardInfo');
+                info.style.display = info.style.display === 'block' ? 'none' : 'block';
+            }
+        </script>
+
+        
+        <div class="shai-card">
+            <div class="shai-placement">
+                <img src="shai-ball.png">
+            </div>
+            <div class="shai-player-card">
+                
+            </div>
+            <div class="shai-rating">
+                <h1>98</h1>
+            </div>
+            <div class="shai-title-card">
+                <h1>SHAI GILGEOUS-ALEXANDER</h1>
+            </div>
+        
+            <div class="shai-position">
+                <h1>SG</h1>
+            </div>
+            <div class="shai-team">
+                <img src="okc.png">
+            </div> 
+        </div>
+        
+        <div class="shai-info" id="cardInfo2">
+            <h1 class="stats">2024 - 2025 SEASON</h1>
+            <h1 class="team-name">TEAM: OKLAHOMA CITY THUNDER</h1>
+            <h1 class="position-name">POSITION: SG/PG</h1>
+            <h1 class="archetype">ARCHETYPE: ALL-AROUND STAR</h1>
+            <h1 class="PPG">PPG: 32.7 POINTS</h1>
+            <h1 class="RPG">RPG: 5.0 REBOUNDS</h1>
+            <h1 class="APG">APG: 6.4 ASSISTS</h1>
+        </div>
+    
+        <script>
+            function toggleInfo() {
+                const info = document.getElementById('cardInfo2');
+                info.style.display = info.style.display === 'block' ? 'none' : 'block';
+            }
+        </script>
+
+
+    
+        <div class="lebron-card"></div>
+
+        
+
+    </body>
+</html>
