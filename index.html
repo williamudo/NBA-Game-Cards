@@ -23,7 +23,8 @@
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
-                overflow: hidden;
+                
+
             }
             
 
@@ -38,7 +39,7 @@
             .jalen-card {
                 position: absolute;
                 top: 20%;
-                left: 12%;
+                left: 8%;
                 height: 750px;
                 width: 500px;
                 border-radius: 10%;
@@ -108,9 +109,7 @@
                 border-bottom-right-radius: 10%;
                 border-bottom-left-radius: 10%;
                 box-shadow: 0 2px 4px rgb(0, 0, 0);
-                border-bottom: 2px solid #F73C3C;
-                border-left: 2px solid #F73C3C;
-                border-right: 2px solid #F73C3C;
+                margin-top: -1.5px;
                 
             }
 
@@ -167,7 +166,7 @@
                 border-radius: 10%;
                 position: absolute;
                 top: 25%;
-                left: 40%;
+                left: 50%;
                 font-size: 1em;
                 box-shadow: 1px 2px 4px rgb(0, 0, 0);
                 opacity: 0;
@@ -368,7 +367,7 @@
                 border-radius: 10%;
                 position: absolute;
                 top: 30%;
-                left: 25%;
+                left: 15%;
                 font-size: 1em;
                 box-shadow: 1px 2px 4px rgb(0, 0, 0);
                 opacity: 0;
@@ -437,34 +436,30 @@
             }
 
 
-
-            /* Hide jalen-card when shai-card is hovered */
-            .shai-card:hover ~ .jalen-card {
+            .card-info,
+            .shai-info {
                 opacity: 0;
                 visibility: hidden;
-                display: none;
+                transition: all 0.3s ease;
             }
 
-            /* Hide shai-card when jalen-card is hovered */
-            .jalen-card:hover ~ .shai-card {
-                opacity: 0;
-                visibility: hidden;
-                display: none;
-            }
-
-            /* Optional: Show info when card is hovered */
-            .shai-card:active ~ .shai-info,
-            .jalen-card:active ~ .card-info {
-                transition-delay: 0.5s;
+            .card-info.show,
+            .shai-info.show {
                 opacity: 1;
                 visibility: visible;
             }
+
+            .hidden {
+                display: none;
+            }
+
+           
 
         </style>
     </head>
     <body>
         
-        <div class="jalen-card">
+        <div class="jalen-card" id="jalenCard" onclick="toggleCard('jalenCard', 'cardInfo', 'shaiCard', 'cardInfo2')">
             <div class="player-placement">
                 <img src="jalen-no-background.png">
             </div>
@@ -495,17 +490,9 @@
             <h1 class="APG">APG: 3.4 ASSISTS</h1>
         </div>
 
-        
-        
-        <script>
-            function toggleInfo() {
-                const info = document.getElementById('cardInfo');
-                info.style.display = info.style.display === 'block' ? 'none' : 'block';
-            }
-        </script>
 
         
-        <div class="shai-card">
+        <div class="shai-card" id="shaiCard" onclick="toggleCard('shaiCard', 'cardInfo2', 'jalenCard', 'cardInfo')">
             <div class="shai-placement">
                 <img src="shai-ball.png">
             </div>
@@ -538,17 +525,25 @@
         </div>
     
         <script>
-            function toggleInfo() {
-                const info = document.getElementById('cardInfo2');
-                info.style.display = info.style.display === 'block' ? 'none' : 'block';
+            function toggleCard(cardId, infoId, otherCardId, otherInfoId) {
+                const card = document.getElementById(cardId);
+                const info = document.getElementById(infoId);
+                const otherCard = document.getElementById(otherCardId);
+                const otherInfo = document.getElementById(otherInfoId);
+
+                const showing = info.classList.contains('show');
+
+                // Reset all
+                info.classList.remove('show');
+                otherInfo.classList.remove('show');
+                card.classList.remove('hidden');
+                otherCard.classList.remove('hidden');
+
+                if (!showing) {
+                    info.classList.add('show');
+                    otherCard.classList.add('hidden');
+                }
             }
         </script>
-
-
-    
-        <div class="lebron-card"></div>
-
-        
-
     </body>
 </html>
